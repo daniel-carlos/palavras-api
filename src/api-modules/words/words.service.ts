@@ -24,7 +24,7 @@ export class WordsService {
   update(id: number, data: UpdateWordDto) {
     return this.prisma.word.update({
       where: { id },
-      data: data
+      data: {...data, length: data.text.length}
     });
   }
 

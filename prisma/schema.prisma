@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./words.db"
+}
+
+model Word {
+  id          Int           @id @default(autoincrement())
+  text        String        @unique
+  explicit    Boolean
+  length      Int
+  WordOnGroup WordOnGroup[]
+}
+
+model Group {
+  id          Int           @id @default(autoincrement())
+  name        String
+  WordOnGroup WordOnGroup[]
+}
+
+model WordOnGroup {
+  word       Word   @relation(fields: [wordId], references: [id])
+  wordId     Int
+  group      Group  @relation(fields: [groupId], references: [id])
+  groupId    Int
+  assignedBy String
+
+  @@id([wordId, groupId])
+}

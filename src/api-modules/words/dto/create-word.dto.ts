@@ -5,5 +5,5 @@ export class CreateWordDto {
     text: string;
 
     @IsBoolean()
-    explicit: boolean
+    explicit?: boolean
 }

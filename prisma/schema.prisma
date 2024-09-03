@@ -16,7 +16,7 @@ datasource db {
 model Word {
   id          Int           @id @default(autoincrement())
   text        String        @unique
-  explicit    Boolean
+  explicit    Boolean       @default(false)
   length      Int
   WordOnGroup WordOnGroup[]
 }

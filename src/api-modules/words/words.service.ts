@@ -6,10 +6,24 @@ import { BatchCreateWordsDTO } from './dto/batch-create-words.dto';
 
 @Injectable()
 export class WordsService {
-  
+
   constructor(
     private readonly prisma: PrismaService
   ) { }
+
+  getRandomElement = <T>(array: T[]): T => {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex];
+  };
+
+  getRandomUniqueElements<T>(array: T[], n: number): T[] {
+    if (n > array.length) {
+      throw new Error('O valor de n é maior que o tamanho do array');
+    }
+
+    const shuffledArray = [...array].sort(() => 0.5 - Math.random());
+    return shuffledArray.slice(0, n);
+  }
 
   create(data: CreateWordDto) {
     return this.prisma.word.create({ data: { ...data, length: data.text.length } });
@@ -44,8 +58,14 @@ export class WordsService {
     return this.prisma.word.findFirst({ where: { id } });
   }
 
-  random() {
-    throw new Error('Method not implemented.');
+  async random(size = 0, n = 0, explicit = false) {
+    const allWords = await this.prisma.word.findMany({
+      where: {
+        ...(size > 0 && { length: size }),
+        explicit
+      }
+    });
+    return this.getRandomUniqueElements(allWords, n > 0 ? n : 1);
   }
 
   update(id: number, data: UpdateWordDto) {

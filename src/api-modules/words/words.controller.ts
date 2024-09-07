@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UsePipes, ValidationPipe, Query, ParseIntPipe, Optional } from '@nestjs/common';
 import { WordsService } from './words.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
@@ -25,8 +25,8 @@ export class WordsController {
   }
 
   @Get("/random")
-  async randomWord() {
-    return this.wordsService.random();
+  async randomWord(@Query('size', new ParseIntPipe({ optional: true })) size = 0, @Query('n', new ParseIntPipe({ optional: true })) n = 1) {
+    return this.wordsService.random(size, n);
   }
 
   @Get(':id')

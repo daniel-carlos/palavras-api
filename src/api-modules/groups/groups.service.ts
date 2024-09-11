@@ -18,6 +18,7 @@ export class GroupsService {
   batchCreate(batchCreateGroupDto: BatchCreateGroupDto) {
     return this.prisma.group.createMany({
       data: batchCreateGroupDto.groups,
+      skipDuplicates: true
     });
   }
 

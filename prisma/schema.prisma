@@ -19,26 +19,16 @@ datasource db {
 }
 
 model Word {
-  id          Int           @id @default(autoincrement())
-  text        String        @unique
-  explicit    Boolean       @default(false)
-  length      Int
-  WordOnGroup WordOnGroup[]
+  id       Int     @id @default(autoincrement())
+  text     String  @unique
+  explicit Boolean @default(false)
+  length   Int
+  groups   Group[]
 }
 
 model Group {
-  id          Int           @id @default(autoincrement())
-  name        String
+  id          Int    @id @default(autoincrement())
+  name        String @unique
   description String
-  WordOnGroup WordOnGroup[]
-}
-
-model WordOnGroup {
-  word       Word   @relation(fields: [wordId], references: [id])
-  wordId     Int
-  group      Group  @relation(fields: [groupId], references: [id])
-  groupId    Int
-  assignedBy String
-
-  @@id([wordId, groupId])
+  words       Word[]
 }

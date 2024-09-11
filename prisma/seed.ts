@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import { min } from 'class-validator';
 import * as fs from "fs"
-import { skip } from 'rxjs';
+
 
 const prisma = new PrismaClient()
 const filePath = './prisma/seeding/br-utf8.txt';
@@ -10,7 +9,16 @@ const linhas = data.split('\n').filter(l => {
     return l.length > 0
 });
 
-const batchCreate = async () => {
+const createGroups = async () => {
+    const groups = require("./seeding/starterGroups.json")
+    console.log(groups);
+
+    await prisma.group.createMany({
+        data: groups, skipDuplicates: true
+    })
+}
+
+const batchCreateWords = async () => {
     try {
         await prisma.word.createMany({
             data: linhas.map(l => {
@@ -27,4 +35,5 @@ const batchCreate = async () => {
     }
 }
 
-batchCreate()
+createGroups()
+batchCreateWords()

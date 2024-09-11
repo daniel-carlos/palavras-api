@@ -22,8 +22,8 @@ export class WordsController {
 
   @Post('assign')
   @UsePipes(ValidationPipe)
-  async assignGroups(@Body("groups") groups: AssignGroupsDto) {
-    return this.wordsService.assignGroups(groups);
+  async assignGroups(@Body() data: AssignGroupsDto) {
+    return this.wordsService.assignGroups({ ...data });
   }
 
   @Get()

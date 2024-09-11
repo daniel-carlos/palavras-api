@@ -1,0 +1,12 @@
+estou criando um banco de dados e uma API de palavras para ser usada por jogos que usam palavras (como wordle, por exemplo).
+No banco de dados, além de uma tabela com as palavras, haverá outra tabela com as categorias.
+sua função é listar 20 categorias que possam ser adicionadas ao banco de dados
+retorne um JSON no formato
+{
+    "groups": [
+        {
+            "name": string,
+            "description": string
+        }
+    ]
+}

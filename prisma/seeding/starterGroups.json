@@ -1,0 +1,146 @@
+[
+    {
+        "name": "Comum",
+        "description": "Palavras do dia a dia, utilizadas em diversas situações."
+    },
+    {
+        "name": "Dificil",
+        "description": "Palavras menos comuns, que exigem um vocabulário mais extenso."
+    },
+    {
+        "name": "Técnico",
+        "description": "Termos relacionados a áreas específicas como ciência, tecnologia, medicina, etc."
+    },
+    {
+        "name": "Antiquado",
+        "description": "Palavras que não são mais utilizadas com frequência na linguagem atual."
+    },
+    {
+        "name": "Regional",
+        "description": "Palavras e expressões típicas de determinada região ou país."
+    },
+    {
+        "name": "Natureza",
+        "description": "Animais, plantas, fenômenos naturais, etc."
+    },
+    {
+        "name": "Corpo humano",
+        "description": "Partes do corpo, doenças, sentimentos, etc."
+    },
+    {
+        "name": "Comida",
+        "description": "Alimentos, bebidas, receitas, etc."
+    },
+    {
+        "name": "História",
+        "description": "Eventos históricos, personagens históricos, épocas, etc."
+    },
+    {
+        "name": "Geografia",
+        "description": "Países, cidades, rios, montanhas, etc."
+    },
+    {
+        "name": "Artes",
+        "description": "Música, pintura, escultura, literatura, cinema, etc."
+    },
+    {
+        "name": "Profissões",
+        "description": "Cargos, atividades profissionais, etc."
+    },
+    {
+        "name": "Verbos",
+        "description": "Palavras que expressam ação ou estado."
+    },
+    {
+        "name": "Adjetivos",
+        "description": "Palavras que qualificam substantivos."
+    },
+    {
+        "name": "Substantivos",
+        "description": "Palavras que nomeiam seres, coisas ou ideias."
+    },
+    {
+        "name": "Palíndromos",
+        "description": "Palavras que se leem da mesma forma de trás para frente."
+    },
+    {
+        "name": "Países",
+        "description": "Nomes de países ao redor do mundo."
+    },
+    {
+        "name": "Cidades",
+        "description": "Nomes de cidades famosas e importantes."
+    },
+    {
+        "name": "Animais",
+        "description": "Nomes de animais de diferentes espécies."
+    },
+    {
+        "name": "Plantas",
+        "description": "Nomes de plantas, flores e árvores."
+    },
+    {
+        "name": "Cores",
+        "description": "Nomes de cores em diferentes tonalidades."
+    },
+    {
+        "name": "Adjetivos",
+        "description": "Adjetivos que descrevem características e qualidades."
+    },
+    {
+        "name": "Verbos",
+        "description": "Verbos de ação e estado."
+    },
+    {
+        "name": "Comidas",
+        "description": "Nomes de alimentos e bebidas."
+    },
+    {
+        "name": "Profissões",
+        "description": "Nomes de diferentes profissões."
+    },
+    {
+        "name": "Objetos",
+        "description": "Nomes de objetos cotidianos."
+    },
+    {
+        "name": "Esportes",
+        "description": "Nomes de esportes e modalidades."
+    },
+    {
+        "name": "Música",
+        "description": "Instrumentos musicais e gêneros musicais."
+    },
+    {
+        "name": "Ciência",
+        "description": "Termos relacionados a ciência e tecnologia."
+    },
+    {
+        "name": "História",
+        "description": "Eventos históricos e figuras importantes."
+    },
+    {
+        "name": "Geografia",
+        "description": "Acidentes geográficos e conceitos geográficos."
+    },
+    {
+        "name": "Artes",
+        "description": "Técnicas e estilos artísticos."
+    },
+    {
+        "name": "Literatura",
+        "description": "Gêneros literários e autores famosos."
+    },
+    {
+        "name": "Filosofia",
+        "description": "Conceitos e pensadores filosóficos."
+    },
+    {
+        "name": "Religião",
+        "description": "Religiões e deidades."
+    },
+    {
+        "name": "Mitologia",
+        "description": "Mitos e lendas de diferentes culturas."
+    }
+]

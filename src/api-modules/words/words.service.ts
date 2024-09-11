@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { BatchCreateWordsDTO } from './dto/batch-create-words.dto';
 import { AssignGroupsDto } from './dto/assign-groups-dto';
 import { getRandomUniqueElements } from '../../utils/utils';
+import { group } from 'console';
 
 @Injectable()
 export class WordsService {
@@ -13,8 +14,24 @@ export class WordsService {
     private readonly prisma: PrismaService
   ) { }
 
-  assignGroups(groups: AssignGroupsDto) {
-    throw new Error('Method not implemented.');
+  async assignGroups(data: AssignGroupsDto) {
+    // const word = await this.prisma.word.findFirst({ where: { id: data.id }, include: { groups: true } })
+
+    // word.groups = await this.prisma.group.findMany({ where: { id: { in: data.groups } } });
+    // await this.prisma.word.update({
+    //   where: { id: data.id },
+    //   data: word
+    // })
+    // return word
+
+    return await this.prisma.word.update({
+      where: { id: data.id },
+      data: {
+        groups: {
+          set: data.groups.map(groupId => ({ id: groupId }))
+        }
+      }
+    })
   }
 
   create(data: CreateWordDto) {
@@ -50,7 +67,9 @@ export class WordsService {
   }
 
   findOne(id: number) {
-    return this.prisma.word.findFirst({ where: { id } });
+    return this.prisma.word.findFirst({
+      where: { id }, include: { groups: true }
+    });
   }
 
   async random(size = 0, n = 0, explicit = false) {

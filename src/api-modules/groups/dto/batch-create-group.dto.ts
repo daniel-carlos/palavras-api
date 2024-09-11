@@ -1,11 +1,14 @@
 import { Group } from "@prisma/client";
 import { IsArray, IsInstance } from "class-validator";
 
-import { Group as GroupModel } from "@prisma/client";
-import { GroupsModule } from "../groups.module";
+class GroupDto {
+    id: number;
+    name: string;
+    description: string;
+}
 
 export class BatchCreateGroupDto {
     @IsArray()
-    // @IsInstance(GroupsModule, { each: true })
+    @IsInstance(GroupDto, { each: true })
     groups: Group[];
 }

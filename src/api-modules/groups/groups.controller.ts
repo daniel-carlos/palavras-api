@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Query, ParseIntPipe } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -25,6 +25,12 @@ export class GroupsController {
     return this.groupsService.findAll();
   }
 
+  
+    @Get("random")
+    async randomGroups(@Query('n', new ParseIntPipe({ optional: true })) n = 1) {
+      return await this.groupsService.random(n);
+    }
+    
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.groupsService.findOne(+id);

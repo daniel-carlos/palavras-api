@@ -15,15 +15,6 @@ export class WordsService {
   ) { }
 
   async assignGroups(data: AssignGroupsDto) {
-    // const word = await this.prisma.word.findFirst({ where: { id: data.id }, include: { groups: true } })
-
-    // word.groups = await this.prisma.group.findMany({ where: { id: { in: data.groups } } });
-    // await this.prisma.word.update({
-    //   where: { id: data.id },
-    //   data: word
-    // })
-    // return word
-
     return await this.prisma.word.update({
       where: { id: data.id },
       data: {

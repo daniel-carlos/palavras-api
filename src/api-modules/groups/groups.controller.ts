@@ -25,12 +25,11 @@ export class GroupsController {
     return this.groupsService.findAll();
   }
 
-  
-    @Get("random")
-    async randomGroups(@Query('n', new ParseIntPipe({ optional: true })) n = 1) {
-      return await this.groupsService.random(n);
-    }
-    
+  @Get("random")
+  async randomGroups(@Query('n', new ParseIntPipe({ optional: true })) n = 1) {
+    return await this.groupsService.random(n);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.groupsService.findOne(+id);

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { BatchCreateGroupDto } from './dto/batch-create-group.dto';
 
 @Injectable()
 export class GroupsService {
@@ -11,6 +12,12 @@ export class GroupsService {
 
   create(data: CreateGroupDto) {
     return this.prisma.group.create({ data: data });
+  }
+
+  batchCreate(batchCreateGroupDto: BatchCreateGroupDto) {
+    return this.prisma.group.createMany({
+      data: batchCreateGroupDto.groups,
+    });
   }
 
   findAll() {

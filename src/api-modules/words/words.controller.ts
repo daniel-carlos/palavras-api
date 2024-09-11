@@ -3,6 +3,7 @@ import { WordsService } from './words.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { BatchCreateWordsDTO } from './dto/batch-create-words.dto';
+import { AssignGroupsDto } from './dto/assign-groups-dto';
 
 @Controller('words')
 export class WordsController {
@@ -19,9 +20,18 @@ export class WordsController {
     return this.wordsService.batchCreate(data);
   }
 
+  @Post('assign')
+  @UsePipes(ValidationPipe)
+  async assignGroups(@Body("groups") groups: AssignGroupsDto) {
+    return this.wordsService.assignGroups(groups);
+  }
+
   @Get()
-  async findAll() {
-    return this.wordsService.findAll();
+  async findAll(
+    @Query('skip', new ParseIntPipe({ optional: true })) skip = 0,
+    @Query('take', new ParseIntPipe({ optional: true })) take = 100
+  ) {
+    return this.wordsService.findAll(skip, Math.min(take, 100));
   }
 
   @Get("/random")
@@ -35,6 +45,7 @@ export class WordsController {
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() updateWordDto: UpdateWordDto) {
     return this.wordsService.update(+id, updateWordDto);
   }

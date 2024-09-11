@@ -3,18 +3,23 @@ import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDto } from './dto/update-word.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { BatchCreateWordsDTO } from './dto/batch-create-words.dto';
+import { AssignGroupsDto } from './dto/assign-groups-dto';
 
 @Injectable()
 export class WordsService {
-
+  
   constructor(
     private readonly prisma: PrismaService
   ) { }
-
+  
   getRandomElement = <T>(array: T[]): T => {
     const randomIndex = Math.floor(Math.random() * array.length);
     return array[randomIndex];
   };
+  
+  assignGroups(groups: AssignGroupsDto) {
+    throw new Error('Method not implemented.');
+  }
 
   getRandomUniqueElements<T>(array: T[], n: number): T[] {
     if (n > array.length) {
@@ -50,8 +55,11 @@ export class WordsService {
     });
   }
 
-  findAll() {
-    return this.prisma.word.findMany();
+  findAll(skip: number, take: number) {
+    return this.prisma.word.findMany({
+      skip,
+      take
+    });
   }
 
   findOne(id: number) {
@@ -71,7 +79,9 @@ export class WordsService {
   update(id: number, data: UpdateWordDto) {
     return this.prisma.word.update({
       where: { id },
-      data: { ...data, length: data.text.length }
+      data: {
+        ...data,
+      }
     });
   }
 

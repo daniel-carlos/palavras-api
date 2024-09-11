@@ -1,15 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { BatchCreateGroupDto } from './dto/batch-create-group.dto';
 
 @Controller('groups')
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) { }
 
   @Post()
+  @UsePipes(ValidationPipe)
   async create(@Body() createGroupDto: CreateGroupDto) {
     return this.groupsService.create(createGroupDto);
+  }
+
+  @Post("batch")
+  @UsePipes(ValidationPipe)
+  async batchCreate(@Body() batchCreateGroupDto: BatchCreateGroupDto) {
+    return this.groupsService.batchCreate(batchCreateGroupDto);
   }
 
   @Get()
@@ -23,6 +31,7 @@ export class GroupsController {
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
   async update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
     return this.groupsService.update(+id, updateGroupDto);
   }

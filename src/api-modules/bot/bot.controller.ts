@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { BotService } from "./bot.service";
 import { AutoAssignDTO } from "./dto/auto-assign.dto";
 
@@ -12,5 +12,10 @@ export class BotController {
     @UsePipes(ValidationPipe)
     async autoAssign(@Body() { words, groups }: AutoAssignDTO) {
         return this.service.autoAssign(words, groups);
+    }
+
+    @Post("random-assign/:n")
+    async randomAssign(@Param("n", ParseIntPipe) nWords: number) {
+        return this.service.randomAssign(nWords);
     }
 }

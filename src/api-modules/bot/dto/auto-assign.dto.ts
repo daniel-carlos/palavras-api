@@ -2,12 +2,12 @@ import { Group, Word } from "@prisma/client"
 import { Type } from "class-transformer";
 import { IsArray, IsInstance, ValidateNested } from "class-validator"
 
-class WordDto {
+export class WordDto {
     id: number;
     text: string;
 }
 
-class GroupDto {
+export class GroupDto {
     id: number;
     name: string;
     description: string;

@@ -14,17 +14,7 @@ export class ProceduresService {
 
     async updateWordLengths() {
         try {
-            // Atualiza todos os registros de Word, definindo o length como o comprimento do text
-            // TODO:
-            // await this.prisma.word.updateMany({
-            //     data: {
-            //         length: {
-            //             set: this.getLength, // Calcula o comprimento para cada registro
-            //         },
-            //     },
-            // });
-
-            console.log('Comprimentos dos words atualizados com sucesso!');
+           // TODO: atualizar o length das palavras
         } catch (error) {
             console.error('Erro ao atualizar comprimentos:', error);
         } finally {

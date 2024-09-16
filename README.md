@@ -1,9 +1,19 @@
+<!-- ![Banner](./assets/banner.png) -->
 
-# API Rest com Node.js, NestJS e Prisma ORM
+
+![Node.js](https://img.shields.io/badge/node-%3E%3D%2014.0.0-brightgreen)
+![NestJS](https://img.shields.io/badge/nestjs-%5E8.0.0-red)
+![Prisma](https://img.shields.io/badge/prisma-%5E3.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+
+# API de palavras da língua portuguesa
 
 Este projeto é uma API REST desenvolvida por Daniel Carlos para servir como um banco de palavras da língua portuguesa associadas a grupos de palavras.
 
 Essa API pode ser usada por aplicativos e jogos que usam palavras.
+
+Seeding inicial com mais de 260K palavras retiradas da [Lista de todas as palavras do português brasileiro](https://www.ime.usp.br/~pf/dicios/)
 
 ## Tecnologias Utilizadas
 
@@ -11,6 +21,11 @@ Essa API pode ser usada por aplicativos e jogos que usam palavras.
 - **Typescript**: Superset de javascript que adiciona tipagem estática à linguagem.
 - **NestJS**: Framework de desenvolvimento de aplicações escaláveis em Node.js com foco em arquitetura modular e programação orientada a objetos.
 - **Prisma ORM**: ORM (Object-Relational Mapping) para interação com o banco de dados de forma simples e eficiente.
+
+## Referências
+
+- [Documentação do NestJS](https://nestjs.com/)
+- [Prisma ORM](https://www.prisma.io/docs/)
 
 ## Instalação
 

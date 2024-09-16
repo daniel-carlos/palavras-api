@@ -20,7 +20,9 @@ export class BotService {
     ) { }
 
     async randomAssign(nWords: number) {
-        const words = await this.prisma.word.findMany();
+        const words = await this.prisma.word.findMany({
+            where: { groups: { none: {} } }
+        });
         const selected = getRandomUniqueElements(words, nWords);
         const groups = await this.prisma.group.findMany();
         return this.autoAssign(selected, groups);

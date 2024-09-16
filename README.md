@@ -1,73 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# API Rest com Node.js, NestJS e Prisma ORM
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto é uma API REST desenvolvida por Daniel Carlos para servir como um banco de palavras da língua portuguesa associadas a grupos de palavras.
 
-## Description
+Essa API pode ser usada por aplicativos e jogos que usam palavras.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Tecnologias Utilizadas
 
-## Installation
+- **Node.js**: Plataforma para execução de código JavaScript no lado do servidor.
+- **Typescript**: Superset de javascript que adiciona tipagem estática à linguagem.
+- **NestJS**: Framework de desenvolvimento de aplicações escaláveis em Node.js com foco em arquitetura modular e programação orientada a objetos.
+- **Prisma ORM**: ORM (Object-Relational Mapping) para interação com o banco de dados de forma simples e eficiente.
 
-```bash
-$ yarn install
-```
+## Instalação
 
-## Running the app
+### Pré-requisitos
 
-```bash
-# development
-$ yarn run start
+- **Node.js** (v14 ou superior)
+- **npm** ou **yarn**
+- **Banco de dados** compatível com o Prisma (PostgreSQL, MySQL, SQLite, etc.)
 
-# watch mode
-$ yarn run start:dev
+### Passos para instalar
 
-# production mode
-$ yarn run start:prod
-```
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/daniel-carlos/palavras-api.git
+   ```
 
-## Test
+2. Instale as dependências:
+   ```bash
+   cd nome-do-repositorio
+   npm install
+   # ou
+   yarn install
+   ```
 
-```bash
-# unit tests
-$ yarn run test
+3. Configure o banco de dados. Crie um arquivo `.env` na raiz do projeto e adicione as variáveis de ambiente:
 
-# e2e tests
-$ yarn run test:e2e
+   ```bash
+   DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
+   GEMINI_API_KEY="<<your_gemini_api_key>>"
+   ```
 
-# test coverage
-$ yarn run test:cov
-```
+4. Configurar o Prisma:
+   ```bash
+   npx prisma generate
+   ```
 
-## Support
+4. Execute as migrações do Prisma:
+   ```bash
+   npx prisma migrate dev
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+5. Inicie o servidor:
+   ```bash
+   npm run start
+   # ou
+   yarn start
+   ```
 
-## Stay in touch
+## Endpoints
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Exemplos de Endpoints
+
+- **POST** `/words`: Cria uma nova palavra.
+- **POST** `/words/batch`: Cria várias palavras de uma vez.
+- **POST** `/words/assign`: Cria associações entre uma palavra e os grupos.
+- **GET** `/words`: retorna as palavras do banco.
+- **GET** `/words/:id`: retorna uma palavra do banco.
+- **GET** `/words/random`: retorna um conjunto de palavras escolhidas de maneira aleatória
+- **PATCH** `/words/:id`: Edita os dados de uma palavra.
+- **DELETE** `/words/:id`: Remove uma palavra do banco.
+- **POST** `/bot/auto-assign`: recebe uma lista de palavras e uma lista de grupos e usa a API do Gemini para criar associações entre as palavras e os grupos.
+- **POST** `/bot/random-assign/:n`: cria associações entre **n** palavras escolhidas aleatoriamente e os grupos passados usando a API do Gemini.  
+
+## Como Contribuir
+
+1. Faça um fork deste repositório.
+2. Crie uma branch com a sua feature: `git checkout -b minha-feature`.
+3. Faça commit das suas alterações: `git commit -m 'feat: Minha nova feature'`.
+4. Faça push para a branch: `git push origin minha-feature`.
+5. Abra um pull request.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Este projeto está licenciado sob a [MIT License](LICENSE).

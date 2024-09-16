@@ -67,7 +67,15 @@ export class WordsService {
     const allWords = await this.prisma.word.findMany({
       where: {
         ...(size > 0 && { length: size }),
-        explicit
+        explicit,
+        groups: { some: {}, every: { id: { notIn: [13] } }, }
+      },
+      include: {
+        groups: {
+          select: {
+            name: true
+          }
+        }
       }
     });
     return getRandomUniqueElements(allWords, n > 0 ? n : 1);

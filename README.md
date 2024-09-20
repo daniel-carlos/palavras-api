@@ -1,9 +1,9 @@
 <!-- ![Banner](./assets/banner.png) -->
 
 
-![Node.js](https://img.shields.io/badge/node-%3E%3D%2014.0.0-brightgreen)
-![NestJS](https://img.shields.io/badge/nestjs-%5E8.0.0-red)
-![Prisma](https://img.shields.io/badge/prisma-%5E3.0.0-blue)
+![Node.js](https://img.shields.io/badge/node-%3E%3D%2022.0.0-brightgreen)
+![NestJS](https://img.shields.io/badge/nestjs-%5E10.0.0-red)
+![Prisma](https://img.shields.io/badge/prisma-%5E5.19.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 

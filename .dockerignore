@@ -7,7 +7,7 @@ dist
 *.db
 .env
 coverage
-.env*
+# .env*
 .flaskenv*
 !.env.project
 !.env.vault

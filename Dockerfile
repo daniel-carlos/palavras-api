@@ -18,6 +18,8 @@ COPY . .
 
 # Gere o Prisma Client
 RUN npx prisma generate
+RUN npx prisma migrate deploy
+RUN npm run build
 
 # Exponha a porta que o NestJS irá rodar
 EXPOSE 3000

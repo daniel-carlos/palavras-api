@@ -1,5 +1,5 @@
 export enum GenProvider {
-    "gemini",
-    "groq",
-    "ollama"
+    gemini = "gemini",
+    groq = "groq",
+    ollama = "ollama"
 }

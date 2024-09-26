@@ -13,8 +13,9 @@ export class BotController {
 
     @Post("auto-assign")
     @UsePipes(ValidationPipe)
-    async autoAssign(@Body() { words, groups }: AutoAssignDTO) {
-        return this.service.autoAssign(words, groups, GenProvider.groq);
+    async autoAssign(@Body() autoAssignDto: AutoAssignDTO) {
+        const { words, groups, provider } = autoAssignDto;
+        return this.service.autoAssign(words, groups, provider);
     }
 
 

@@ -110,23 +110,23 @@ export class BotService {
         }
     }
 
-    async autoAssign(words: Word[], groups: Group[], provider: GenProvider, persist = false) {
+    async autoAssign(words: Word[], groups: Group[], provider: GenProvider) {
         // const result = await this.getGeminiChatCompletion(words, groups);
         const result = await this.getProvider(words, groups, provider);
         const assigns: AssignDTO[] = result
 
 
-        if (persist) {
-            const mappedAssigns: AssignGroupsDto[] = assigns.map(a => {
-                return {
-                    id: a.word.id,
-                    groups: a.categories.map(cat => cat.id)
-                }
-            })
-            mappedAssigns.forEach(async ma => {
-                await this.wordsService.assignGroups(ma);
-            })
-        }
+        // if (persist) {
+        //     const mappedAssigns: AssignGroupsDto[] = assigns.map(a => {
+        //         return {
+        //             id: a.word.id,
+        //             groups: a.categories.map(cat => cat.id)
+        //         }
+        //     })
+        //     mappedAssigns.forEach(async ma => {
+        //         await this.wordsService.assignGroups(ma);
+        //     })
+        // }
 
         return assigns
     }

@@ -1,6 +1,6 @@
 import { Group, Word } from "@prisma/client"
 import { Type } from "class-transformer";
-import { IsArray, IsEnum, IsInstance, IsInt, IsOptional, ValidateNested } from "class-validator"
+import { IsArray, IsBoolean, IsEnum, IsInstance, IsInt, IsOptional, ValidateNested } from "class-validator"
 import { GenProvider } from "src/types/GenAI";
 
 export class WordDto {
@@ -24,14 +24,15 @@ export class AutoAssignDTO {
     @ValidateNested({ each: true })
     @Type(() => GroupDto)
     groups: Group[]
+
+    @IsEnum(GenProvider)
+    provider: GenProvider
 }
 
 
-    // @IsEnum(GenProvider)
-    // provider: GenProvider
 
 
-    
+
 // enum GenProvider {
 //     "gemini",
 //     "groq"

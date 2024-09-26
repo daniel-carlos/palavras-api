@@ -30,7 +30,7 @@ export class BotService {
         });
         const selected = getRandomUniqueElements(words, nWords);
         const groups = await this.prisma.group.findMany();
-        return this.autoAssign(selected, groups, GenProvider.groq);
+        return this.autoAssign(selected, groups, provider);
     }
 
 
@@ -77,7 +77,8 @@ export class BotService {
             model: "llama3-8b-8192",
             response_format: {
                 type: "json_object"
-            }
+            },
+        
         });
         const assigns: AssignDTO[] = JSON.parse(chat.choices[0].message.content)
         return assigns;

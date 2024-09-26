@@ -24,11 +24,14 @@ export class AutoAssignDTO {
     @ValidateNested({ each: true })
     @Type(() => GroupDto)
     groups: Group[]
+}
+
 
     // @IsEnum(GenProvider)
     // provider: GenProvider
-}
 
+
+    
 // enum GenProvider {
 //     "gemini",
 //     "groq"

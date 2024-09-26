@@ -8,7 +8,7 @@ import { AssignGroupsDto } from "../words/dto/assign-groups-dto";
 import { WordsService } from "../words/words.service";
 import Groq from "groq-sdk";
 import { GenProvider } from "src/types/GenAI";
-
+import ollama from 'ollama'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -31,6 +31,23 @@ export class BotService {
         const selected = getRandomUniqueElements(words, nWords);
         const groups = await this.prisma.group.findMany();
         return this.autoAssign(selected, groups, provider);
+    }
+
+    async getOllamaChatCompletion(words: Word[], groups: Group[]) {
+        const messages = [
+            { role: "user", content: "Abaixo, temos uma lista de palavras e uma lista de categorias" },
+            { role: "user", content: `Palavras: ${JSON.stringify(words)}` },
+            { role: "user", content: `Categorias: ${JSON.stringify(groups)}` },
+            { role: "user", content: `sua função é categorizar todas as palavras e retornar um JSON no formato {"assigns": [{"word": {"id": number, "text": string}, "categories": [{"id": number, "name":string}]}]}. pode adicionar mais de uma categoria a uma palavra` },
+        ]
+
+        const response = await ollama.chat({ model: 'llama3.1', messages, stream: false, format: "json" })
+        console.log("\n\n\n");
+        console.log(response.message.content);
+        console.log("\n\n\n");
+
+        const assigns: AssignDTO[] = JSON.parse(response.message.content).assigns
+        return assigns
     }
 
 
@@ -74,11 +91,11 @@ export class BotService {
                     ],
                 },
             ],
-            model: "llama3-8b-8192",
+            model: "llama3-70b-8192",
             response_format: {
                 type: "json_object"
             },
-        
+
         });
         const assigns: AssignDTO[] = JSON.parse(chat.choices[0].message.content)
         return assigns;
@@ -90,6 +107,8 @@ export class BotService {
                 return this.getGeminiChatCompletion(words, groups);
             case GenProvider.groq:
                 return this.getGroqChatCompletion(words, groups);
+            case GenProvider.ollama:
+                return this.getOllamaChatCompletion(words, groups);
             default:
                 break;
         }

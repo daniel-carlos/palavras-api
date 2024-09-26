@@ -42,10 +42,6 @@ export class BotService {
         ]
 
         const response = await ollama.chat({ model: 'llama3.1', messages, stream: false, format: "json" })
-        console.log("\n\n\n");
-        console.log(response.message.content);
-        console.log("\n\n\n");
-
         const assigns: AssignDTO[] = JSON.parse(response.message.content).assigns
         return assigns
     }

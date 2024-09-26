@@ -1,6 +1,9 @@
-import { Body, Controller, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, Param, ParseEnumPipe, ParseIntPipe, Post, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { BotService } from "./bot.service";
 import { AutoAssignDTO } from "./dto/auto-assign.dto";
+import { GenProvider } from "src/types/GenAI";
+
+
 
 @Controller("bot")
 export class BotController {
@@ -11,11 +14,15 @@ export class BotController {
     @Post("auto-assign")
     @UsePipes(ValidationPipe)
     async autoAssign(@Body() { words, groups }: AutoAssignDTO) {
-        return this.service.autoAssign(words, groups);
+        return this.service.autoAssign(words, groups, GenProvider.groq);
     }
 
-    @Post("random-assign/:n")
-    async randomAssign(@Param("n", ParseIntPipe) nWords: number) {
-        return this.service.randomAssign(nWords);
+
+    @Post('random-assign')
+    async randomAssign(
+        @Query('n', ParseIntPipe) nWords: number,
+        // @Query('provider', new DefaultValuePipe(GenProvider.gemini), ParseEnumPipe) provider: GenProvider = GenProvider.gemini
+    ) {
+        return this.service.randomAssign(nWords, GenProvider.groq);
     }
 }

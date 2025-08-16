@@ -10,26 +10,11 @@ Tanto as palavras quanto os grupos serão referenciados por meio de IDs.
 
 ## Instructions
 - Nem todas as palavras precisam ser categorizadas. Se uma palavra não se encaixa em nenhum grupo, ela deve ser ignorada.
+- Sempre leia a descrição de cada grupo antes de categorizar uma palavra e leve em consideração as relações entre as palavras e os grupos.
+- Não existe um limite de quantos grupos uma palavra pode estar inserida.
 
 ## Input
 ´´´
 {input}
-´´´
-
-
-## Output Format
-´´´
-{{
-    "results": [
-        {{
-            "word": 1,
-            "groups": [3, 5, 6]
-        }},
-        {{
-            "word": 2,
-            "groups": [2]
-        }}
-    ]
-}}
 ´´´
 `;

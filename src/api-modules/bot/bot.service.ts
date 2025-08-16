@@ -47,11 +47,13 @@ export class BotService {
     type outputType = z.infer<typeof outputFormat>;
 
     const prompt = ChatPromptTemplate.fromTemplate(promptTemplate);
-    const model = llm.withStructuredOutput(zodToJsonSchema(outputFormat));
+    const model = llm.withStructuredOutput(zodToJsonSchema(outputFormat), {
+      includeRaw: true,
+    });
 
     const chain = prompt.pipe(model);
 
-    const result: outputType = await chain.invoke({
+    const result = await chain.invoke({
       input: JSON.stringify({
         words: words.map((w) => ({ id: w.id, text: w.text })),
         groups: groups.map((g) => ({
@@ -62,8 +64,8 @@ export class BotService {
       }),
     });
 
-    console.log(JSON.stringify(result.results));
+    console.log(JSON.stringify(result.raw.response_metadata.tokenUsage, null, 2));
 
-    return result;
+    return result.parsed;
   }
 }

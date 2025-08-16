@@ -19,11 +19,13 @@ datasource db {
 }
 
 model Word {
-  id       Int     @id @default(autoincrement())
-  text     String  @unique
-  explicit Boolean @default(false)
-  length   Int
-  groups   Group[]
+  id          Int     @id @default(autoincrement())
+  text        String  @unique
+  explicit    Boolean @default(false)
+  initialized Boolean @default(false)
+  active      Boolean @default(true)
+  length      Int
+  groups      Group[]
 }
 
 model Group {

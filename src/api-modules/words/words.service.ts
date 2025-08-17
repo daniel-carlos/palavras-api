@@ -6,60 +6,75 @@ import { BatchCreateWordsDTO } from './dto/batch-create-words.dto';
 import { AssignGroupsDto } from './dto/assign-groups-dto';
 import { getRandomUniqueElements } from '../../utils/utils';
 import { group } from 'console';
+import { AssignGroupsManyDto } from './dto/assign-groups-many-dto';
 
 @Injectable()
 export class WordsService {
-
-  constructor(
-    private readonly prisma: PrismaService
-  ) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async assignGroups(data: AssignGroupsDto) {
     return await this.prisma.word.update({
       where: { id: data.id },
       data: {
         groups: {
-          set: data.groups.map(groupId => ({ id: groupId }))
-        }
-      }
-    })
+          set: data.groups.map((groupId) => ({ id: groupId })),
+        },
+      },
+    });
+  }
+
+  async assignGroupsMany(data: AssignGroupsManyDto) {
+    // Atualiza os grupos de cada palavra individualmente
+    const updates = data.assigns.results.map((assign) =>
+      this.prisma.word.update({
+        where: { id: assign.word },
+        data: {
+          groups: {
+            set: assign.groups.map((groupId) => ({ id: groupId })),
+          },
+        },
+      })
+    );
+    return await this.prisma.$transaction(updates);
   }
 
   create(data: CreateWordDto) {
-    return this.prisma.word.create({ data: { ...data, length: data.text.length } });
+    return this.prisma.word.create({
+      data: { ...data, length: data.text.length },
+    });
   }
 
   async batchCreate(data: BatchCreateWordsDTO) {
-    let newWords = data.words.filter(async w => {
+    let newWords = data.words.filter(async (w) => {
       const foundWord = await this.prisma.word.findFirst({
         where: {
-          text: w
-        }
-      })
-    })
+          text: w,
+        },
+      });
+    });
 
     return this.prisma.word.createMany({
-      data: newWords.map(w => {
+      data: newWords.map((w) => {
         return {
           text: w,
           length: w.length,
-          explicit: false
-        }
+          explicit: false,
+        };
       }),
-
     });
   }
 
   findAll(skip: number, take: number) {
     return this.prisma.word.findMany({
       skip,
-      take
+      take,
     });
   }
 
   findOne(id: number) {
     return this.prisma.word.findFirst({
-      where: { id }, include: { groups: true }
+      where: { id },
+      include: { groups: true },
     });
   }
 
@@ -68,16 +83,19 @@ export class WordsService {
       where: {
         ...(size > 0 && { length: size }),
         explicit,
-        groups: { some: {}, every: { id: { notIn: [13] } }, }
+        groups: { some: {}, every: { id: { notIn: [13] } } },
       },
       include: {
         groups: {
           select: {
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
+    if (allWords.length === 0) {
+      return [];
+    }
     return getRandomUniqueElements(allWords, n > 0 ? n : 1);
   }
 
@@ -86,11 +104,11 @@ export class WordsService {
       where: { id },
       data: {
         ...data,
-      }
+      },
     });
   }
 
   remove(id: number) {
-    return this.prisma.word.delete({ where: { id } })
+    return this.prisma.word.delete({ where: { id } });
   }
 }

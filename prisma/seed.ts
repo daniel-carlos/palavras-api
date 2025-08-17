@@ -22,10 +22,10 @@ const batchCreateWords = async () => {
     try {
         await prisma.word.createMany({
             data: linhas.map(l => {
-                const word = l.replace("-", "")
+                const word = l.trim()
                 return {
                     text: word,
-                    length: word.length,
+                    length: word.replace("-", "").length, // hifem não conta como letra
                 }
             }),
             skipDuplicates: true

@@ -8,9 +8,8 @@ import Groq from 'groq-sdk';
 import { llm } from './llm/model';
 import { promptTemplate } from './llm/prompts';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
-import { StructuredOutputParser } from '@langchain/core/dist/output_parsers';
+import { AutoAssignOutputFormat, AutoAssignOutputType } from 'src/types';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -32,24 +31,22 @@ export class BotService {
     });
     const selected = getRandomUniqueElements(words, nWords);
     const groups = await this.prisma.group.findMany();
-    return this.autoAssign(selected, groups);
+    const a = await this.autoAssign(selected, groups);
+
+    return a;
   }
 
-  async autoAssign(words: Word[], groups: Group[]) {
-    const outputFormat = z.object({
-      results: z.array(
-        z.object({
-          word: z.number().describe('The ID of the word'),
-          groups: z.array(z.number().describe('The IDs of the groups.')),
-        }),
-      ),
-    });
-    type outputType = z.infer<typeof outputFormat>;
-
+  async autoAssign(
+    words: Word[],
+    groups: Group[],
+  ): Promise<AutoAssignOutputType> {
     const prompt = ChatPromptTemplate.fromTemplate(promptTemplate);
-    const model = llm.withStructuredOutput(zodToJsonSchema(outputFormat), {
-      includeRaw: true,
-    });
+    const model = llm.withStructuredOutput(
+      zodToJsonSchema(AutoAssignOutputFormat),
+      {
+        includeRaw: true,
+      },
+    );
 
     const chain = prompt.pipe(model);
 
@@ -64,7 +61,13 @@ export class BotService {
       }),
     });
 
-    console.log(JSON.stringify(result.raw.response_metadata.tokenUsage, null, 2));
+    console.log(
+      JSON.stringify(result.raw.response_metadata.tokenUsage, null, 2),
+    );
+
+    const x = await this.wordsService.assignGroupsMany({
+      assigns: result.parsed,
+    });
 
     return result.parsed;
   }
